@@ -1,6 +1,7 @@
 import ProductListPage from './page/ProductListPage';
 import ProductDetailPage from './page/ProductDetailPage';
 import CartPage from './page/CartPage';
+import { init } from './util/router';
 
 export default function App({ $target }) {
   this.route = () => {
@@ -22,4 +23,8 @@ export default function App({ $target }) {
       }).render();
     }
   };
+
+  init(this.route);
+
+  this.route();
 }
