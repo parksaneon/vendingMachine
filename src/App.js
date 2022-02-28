@@ -1,3 +1,4 @@
+import CartPage from './page/CartPage';
 import ProductDetailPage from './page/ProductDetailPage';
 import ProductListPage from './page/ProductListPage';
 
@@ -9,7 +10,10 @@ export default function App({ $target }) {
 
     if (pathname === '/') {
       new ProductListPage({ $target }).render();
+    } else if (pathname === '/cart') {
+      new CartPage({ $target }).render();
     } else if (pathname.indexOf('/products/') === 0) {
+      new CartPage({ $target }).render();
       const [_, productId] = pathname.split('/');
 
       new ProductDetailPage({
