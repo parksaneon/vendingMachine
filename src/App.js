@@ -1,6 +1,6 @@
-import CartPage from './page/CartPage';
-import ProductDetailPage from './page/ProductDetailPage';
 import ProductListPage from './page/ProductListPage';
+import ProductDetailPage from './page/ProductDetailPage';
+import CartPage from './page/CartPage';
 
 export default function App({ $target }) {
   this.route = () => {
