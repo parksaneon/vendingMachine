@@ -7,7 +7,7 @@ export default function ProductListPage({ $target }) {
 
   $page.innerHTML = '<h1>상품 목록</h1>';
 
-  this.setState = (nextState) => {
+  this.setState = nextState => {
     this.state = nextState;
   };
 
@@ -22,5 +22,8 @@ export default function ProductListPage({ $target }) {
 
   fetchProducts();
 
-  const productList = new ProductList({ $target: $page, initialState: this.state });
+  const productList = new ProductList({
+    $target: $page,
+    initialState: this.state,
+  });
 }

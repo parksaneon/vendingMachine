@@ -4,7 +4,7 @@ export default function ProductList({ $target, initialState }) {
 
   this.state = initialState;
 
-  this.setState = (nextState) => {
+  this.setState = nextState => {
     this.state = nextState;
     this.render();
   };
