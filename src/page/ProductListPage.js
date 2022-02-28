@@ -1,3 +1,4 @@
+import ProductList from '../components/ProductList';
 import request from '../util/request';
 
 export default function ProductListPage({ $target }) {
@@ -10,14 +11,16 @@ export default function ProductListPage({ $target }) {
     this.state = nextState;
   };
 
+  this.render = () => {
+    $target.appendChild($page);
+  };
+
   const fetchProducts = async () => {
     const products = await request('/products');
     this.setState(products);
   };
 
-  this.render = () => {
-    $target.appendChild($page);
-  };
-
   fetchProducts();
+
+  const productList = new ProductList({ $target: $page, initialState: this.state });
 }
