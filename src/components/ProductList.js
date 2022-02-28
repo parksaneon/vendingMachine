@@ -1,3 +1,5 @@
+import { routeChange } from '../util/router';
+
 export default function ProductList({ $target, initialState }) {
   const $productList = document.createElement('ul');
   $target.appendChild($productList);
@@ -14,7 +16,12 @@ export default function ProductList({ $target, initialState }) {
 
     $productList.innerHTML = `${this.state
       .map(
-        ({ imageUrl, name, price }) => `<li class="Product">
+        ({
+          id,
+          imageUrl,
+          name,
+          price,
+        }) => `<li class="Product" data-product-id="${id}">
         <img src="${imageUrl}"/>
         <div class="Product__info">
           <div>${name}</div>
@@ -26,4 +33,13 @@ export default function ProductList({ $target, initialState }) {
   };
 
   this.render();
+
+  $productList.addEventListener('click', ({ target }) => {
+    const $li = target.closet('li');
+    const { productId } = $li.dataset;
+
+    if (productId) {
+      routeChange(`/products/${productId}`);
+    }
+  });
 }

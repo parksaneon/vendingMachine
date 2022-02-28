@@ -24,6 +24,7 @@ export default function App({ $target }) {
     }
   };
 
+  // ROUTE_CHANGE 이벤트 발생 시 마다 App의 this.route 함수가 호출
   init(this.route);
 
   this.route();
