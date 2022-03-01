@@ -1,3 +1,6 @@
+import { routeChange } from '../util/router';
+import { removeItem } from '../util/storage';
+
 export default function Cart({ $target, initialState }) {
   const $component = document.createElement('div');
   $component.className = 'Cart';
@@ -43,4 +46,12 @@ export default function Cart({ $target, initialState }) {
   };
 
   this.render();
+
+  $component.addEventListener('click', e => {
+    if (e.target.className === 'OrderButton') {
+      alert('주문 되었습니다!');
+      removeItem('products_cart');
+      routeChange('/');
+    }
+  });
 }
