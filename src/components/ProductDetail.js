@@ -6,8 +6,10 @@ export default function ProductDetail({ $target, initialState }) {
 
   $target.appendChild($productDetail);
 
-  let selectedOptions = null;
   this.state = initialState;
+
+  let selectedOptions = null;
+  let isInitialized = false;
 
   this.setState = nextState => {
     this.state = nextState;
@@ -23,7 +25,8 @@ export default function ProductDetail({ $target, initialState }) {
   this.render = () => {
     const { product: imageUrl, name, price } = this.state;
 
-    $productDetail.innerHTML = `
+    if (!isInitialized) {
+      $productDetail.innerHTML = `
       <img src="${imageUrl}"/>
       <div class="ProductDetail__info">
         <h2>${name}</h2>
@@ -44,13 +47,16 @@ export default function ProductDetail({ $target, initialState }) {
       </div>
     `;
 
-    selectedOptions = new SelectedOptions({
-      $target: $productDetail.querySelector('.ProductDetail__selectedOptions'),
-      initialState: {
-        product: this.state.product,
-        selectedOptions: this.state.selectedOptions,
-      },
-    });
+      selectedOptions = new SelectedOptions({
+        $target: $productDetail.querySelector('.ProductDetail__selectedOptions'),
+        initialState: {
+          product: this.state.product,
+          selectedOptions: this.state.selectedOptions,
+        },
+      });
+
+      isInitialized = ture;
+    }
   };
 
   $productDetail.addEventListener('change', ({ target }) => {
