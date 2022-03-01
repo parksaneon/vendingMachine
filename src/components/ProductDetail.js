@@ -1,14 +1,23 @@
+import SelectedOptions from './SelectedOptions';
+
 export default function ProductDetail({ $target, initialState }) {
   const $productDetail = document.createElement('div');
   $productDetail.className = 'ProductDetail';
 
   $target.appendChild($productDetail);
 
+  let selectedOptions = null;
   this.state = initialState;
 
   this.setState = nextState => {
     this.state = nextState;
     this.render();
+
+    if (selectedOptions) {
+      selectedOptions.setState({
+        selectedOptions: this.selectedOptions,
+      });
+    }
   };
 
   this.render = () => {
@@ -34,6 +43,14 @@ export default function ProductDetail({ $target, initialState }) {
         <div class="ProductDetail__selectedOptions"></div>
       </div>
     `;
+
+    selectedOptions = new SelectedOptions({
+      $target: $productDetail.querySelector('.ProductDetail__selectedOptions'),
+      initialState: {
+        product: this.state.product,
+        selectedOptions: this.state.selectedOptions,
+      },
+    });
   };
 
   $productDetail.addEventListener('change', ({ target }) => {
