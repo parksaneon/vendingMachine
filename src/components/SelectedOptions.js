@@ -44,4 +44,36 @@ export default function SelectedOptions({ $target, initialState }) {
   };
 
   this.render();
+
+  $component.addEventListener('click', e => {
+    // 이벤트가 INPUT 태그에서 발생한 경우에만 처리
+    if (e.target.tagName === 'INPUT') {
+      try {
+        const nextQuantity = parseInt(e.target.value);
+        const nextSelectedOptions = [...this.state.selectedOptions];
+
+        // input의 값이 숫자인 경우에만 처리하기
+        if (typeof nextQuantity === 'number') {
+          const { product } = this.state;
+
+          const optionId = parseInt(e.target.dataset.optionId);
+          const option = product.productOptions.find(option => option.id === optionId);
+          const selectedOptionIndex = nextSelectedOptions.findIndex(
+            selectedOption => selectedOption.optionId === optionId
+          );
+
+          // INPUT에 입력한 값이 재고수량을 넘을 경우 재고수량으로 입력한 것으로 바꿔버리기
+          nextSelectedOptions[selectedOptionIndex].quantity =
+            option.stock >= nextQuantity ? nextQuantity : option.stock;
+
+          this.setState({
+            ...this.state,
+            selectedOptions: nextSelectedOptions,
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
 }
