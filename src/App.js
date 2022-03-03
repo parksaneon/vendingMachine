@@ -29,5 +29,6 @@ export default function App({ $target }) {
 
   this.route();
 
+  // 뒤로 가기, 앞으로 가기 버튼 누를 때 마다 popstate 이벤트 발생
   window.addEventListener('popstate', this.route);
 }

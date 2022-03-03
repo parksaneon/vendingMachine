@@ -45,19 +45,19 @@ export default function SelectedOptions({ $target, initialState }) {
 
   this.render();
 
-  $component.addEventListener('click', e => {
+  $component.addEventListener('click', ({ target }) => {
     // 이벤트가 INPUT 태그에서 발생한 경우에만 처리
-    if (e.target.tagName === 'INPUT') {
+    if (target.tagName === 'INPUT') {
       try {
-        const nextQuantity = parseInt(e.target.value);
+        const nextQuantity = parseInt(target.value);
         const nextSelectedOptions = [...this.state.selectedOptions];
 
         // input의 값이 숫자인 경우에만 처리하기
         if (typeof nextQuantity === 'number') {
           const { product } = this.state;
 
-          const optionId = parseInt(e.target.dataset.optionId);
-          const option = product.productOptions.find(option => option.id === optionId);
+          const optionId = parseInt(target.dataset.optionId);
+          const option = product.productOptions.find(({ id }) => id === optionId);
           const selectedOptionIndex = nextSelectedOptions.findIndex(
             selectedOption => selectedOption.optionId === optionId
           );

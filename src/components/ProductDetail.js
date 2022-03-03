@@ -23,7 +23,9 @@ export default function ProductDetail({ $target, initialState }) {
   };
 
   this.render = () => {
-    const { product: imageUrl, name, price } = this.state;
+    const {
+      product: { imageUrl, name, price },
+    } = this.state;
 
     if (!isInitialized) {
       $productDetail.innerHTML = `
@@ -62,8 +64,11 @@ export default function ProductDetail({ $target, initialState }) {
   $productDetail.addEventListener('change', ({ target }) => {
     if (target.tagName === 'SELECT') {
       const selectedOptionId = parseInt(target.value);
-      const { product, selectedOptions } = this.state;
-      const option = product.productOptions.find(({ id }) => id === selectedOptionId);
+      const {
+        product: { productOptions },
+        selectedOptions,
+      } = this.state;
+      const option = productOptions.find(({ id }) => id === selectedOptionId);
       const selectedOption = selectedOptions.find(({ optionId }) => optionId === selectedOptionId);
 
       if (option && !selectedOption) {
