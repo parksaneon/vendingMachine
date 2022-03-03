@@ -1,3 +1,6 @@
+import { routeChange } from '../util/router';
+import { getItem, setItem } from '../util/storage';
+
 export default function SelectedOptions({ $target, initialState }) {
   const $component = document.createElement('div');
   $target.appendChild($component);
@@ -47,6 +50,9 @@ export default function SelectedOptions({ $target, initialState }) {
 
   $component.addEventListener('click', ({ target }) => {
     // 이벤트가 INPUT 태그에서 발생한 경우에만 처리
+
+    const { selectedOptions } = this.state;
+
     if (target.tagName === 'INPUT') {
       try {
         const nextQuantity = parseInt(target.value);
@@ -74,6 +80,21 @@ export default function SelectedOptions({ $target, initialState }) {
       } catch (e) {
         console.log(e);
       }
+    } else if (e.target.className === 'OrderButton') {
+      const cartData = getItem('products_cart', []);
+
+      setItem(
+        'products_cart',
+        cartData.concat(
+          selectedOptions.map(selectedOption => ({
+            productId: selectedOption.productId,
+            optionId: selectedOption.optionId,
+            quantity: selectedOption.quantity,
+          }))
+        )
+      );
+
+      routeChange('/cart');
     }
   });
 }
